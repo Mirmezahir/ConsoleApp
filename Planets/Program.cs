@@ -1,4 +1,4 @@
-﻿using Core.AppdbContext;
+using Core.AppdbContext;
 using Core.Helpers.Region;
 using Core.Models;
 using System.Net.Http.Headers;
@@ -96,18 +96,28 @@ namespace Planets
                                                 Console.Beep();
                                                 AppDbContext.GetAllPlanets();
                                                 Console.Write("Silmek istediyiniz planetin id : ");
-                                                int planetid;
-                                                do
+                                                
+                                                try
                                                 {
-                                                    deyisen = int.TryParse(Console.ReadLine(), out planetid);
-                                                    if (deyisen == false)
+                                                    int planetid;
+                                                    do
                                                     {
-                                                        Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.WriteLine("REQEM DAXIL EDIN !!!");
-                                                        Console.ForegroundColor = ConsoleColor.White;
-                                                    }
-                                                } while (!deyisen);
-                                                AppDbContext.RemovePlanet(planetid);
+                                                        deyisen = int.TryParse(Console.ReadLine(), out planetid);
+                                                        if (deyisen == false)
+                                                        {
+                                                            Console.ForegroundColor = ConsoleColor.Red;
+                                                            Console.WriteLine("REQEM DAXIL EDIN !!!");
+                                                            Console.ForegroundColor = ConsoleColor.White;
+                                                        }
+                                                    } while (!deyisen);
+                                                    AppDbContext.RemovePlanet(planetid);
+                                                }
+                                                catch (System.NullReferenceException)
+                                                {
+                                                    Console.ForegroundColor = ConsoleColor.Red;
+                                                    Console.WriteLine("Movcud olke yoxdur!");
+                                                    Console.ForegroundColor= ConsoleColor.White;
+                                                }
                                                 break;
                                                 case 3:
                                                 Console.Beep();
@@ -201,12 +211,13 @@ namespace Planets
                                                     Console.ForegroundColor = ConsoleColor.Red;
                                                     Console.WriteLine("REQEM DAXIL EDIN !!!");
                                                     Console.ForegroundColor = ConsoleColor.White;
-                                                    
+
 
 
 
                                                 }
                                                 AppDbContext.RemoveCountry(olkeid);
+
                                                 break;
                                             case 4:
                                                 Console.Beep();
